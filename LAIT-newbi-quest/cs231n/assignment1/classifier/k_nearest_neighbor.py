@@ -77,6 +77,8 @@ class KNearestNeighbor(object):
                 #####################################################################
                 # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
                 dists[i,j]=np.sqrt(np.sum((X[i,:]-self.X_train[j,:])**2))
+                ## 단순히 x와 x_train거리를 넣음
+                ## dist = (500,5000)
 
                 # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
@@ -99,8 +101,9 @@ class KNearestNeighbor(object):
             # Do not use np.linalg.norm().                                        #
             #######################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+            # 단순히 거리값에서 빼면 된다.
             dists=np.sqrt(np.sum((self.X_train-X[i,:])**2,axis=1))
-
+            # broadcast를 사용해서 각 요소별로 빠지게
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
 
@@ -129,8 +132,8 @@ class KNearestNeighbor(object):
         #########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        dists = np.sqrt(np.reshape(np.sum(X**2, axis = 1), [num_test, 1]) + np.reshape(np.sum(self.X_train**2,axis = 1)
-        ,[1,num_train]) -2 * np.matmul(X,self.X_train.T))
+        dists = np.sqrt(np.reshape(np.sum(X**2, axis = 1), [num_test, 1]) + np.reshape(np.sum(self.X_train**2,axis = 1),[1,num_train]) -2 * np.matmul(X,self.X_train.T))
+
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
@@ -175,7 +178,7 @@ class KNearestNeighbor(object):
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-            y_pred[i]=np.bincount(closest_y).argmax()
+            y_pred[i]=np.bincount(closest_y).argmax() # 빈도수 체크 -> 제일 큰 것
 
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
